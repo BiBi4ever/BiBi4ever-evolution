@@ -4,7 +4,7 @@ import itertools
 class Grid:
     """docstring for Grid."""
 
-    def __init__(self, size=(10,10)):
+    def __init__(self, size=(30,30)):
         self.size = size
         self.width, self.height = size
         self.capacity = self.width * self.height
@@ -23,11 +23,8 @@ class Grid:
         self.string = grid
 
     def display(self):
-        output = ""
-        for row in self.string:
-             line = " ".join(row)
-             output += line + "\n"
-        print(output)
+        output = "\n".join(["   ".join(list) for list in self.string])
+        return output
 
     def populate(self, live_cells):
         self.string = [["." for _ in range(self.width)] for _ in range(self.height)]
