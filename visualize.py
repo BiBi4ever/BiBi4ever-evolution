@@ -12,10 +12,15 @@ def update_label():
     var.set(g.display())
     root.update()
 
+def create_widgets():
+    label = Label(root, textvariable=var)
+    start = Button(root, text="Start", command=update_label)
+    finish = Button(root, text="Finish", command=root.destroy)
 
-label = Label(root, textvariable=var)
-start = Button(root, text="Start", command=update_label)
-finish = Button(root, text="Finish", command=root.destroy)
+def pack_widgets():
+    label.pack()
+    start.pack()
+    finish.pack()
 
 root.minsize(width=400, height=400)
 w = root.winfo_reqwidth()
@@ -26,8 +31,8 @@ x = (ws/2) - (w/2)
 y = (hs/2) - (h/2)
 root.geometry('+%d+%d' % (x, y)) ## this part allows you to only change the location
 
-label.pack()
-start.pack()
-finish.pack()
+create_widgets()
+pack_widgets()
+
 
 root.mainloop()
