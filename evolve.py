@@ -3,7 +3,9 @@ import random
 import logging
 import os
 import time
+
 from grid import *
+from objects import *
 
 # Параметры
 length = 20 # длина цепочки ДНК
@@ -13,29 +15,6 @@ population_mutation = 1.0 # шанс мутации индивида внутр�
 number_mutations = 1 # Количество мутаций за итерацию
 
 # ФУНКЦИИ
-
-# Генерирование (прочитывание из файла) базовой популяции
-def generate_DNA(length):
-    DNA = ''.join(random.choice('CGTA') for _ in range(length)) # это с равными вероятностями для любого нуклеотида
-    return DNA
-
-# Мутирование строки
-def mutate_DNA(DNA, number_mutations=1):
-    DNA_list = [i for i in DNA] #перевод строки в лист т.к строки неизменяемы
-    for _ in range(number_mutations):
-        DNA_list[random.randrange(len(DNA_list))] = random.choice('ATGC') #выбираем рандомный индекс в созданном выше листе и заменяем на рандомну
-    return ''.join(DNA_list)
-
-
-# Получение признаков/ прочитывание генов (подсчет % GC)
-def calculate_GC(DNA):
-    return (DNA.count('G') + DNA.count('C'))/(len(DNA))
-
-# Отбор (GC < 0.4)
-def selection(population, GC_threshold=0.4):
-    population_selected = [creature for creature in population if calculate_GC(creature) >= GC_threshold]
-    return population_selected
-
 # Размножение/рекомбинация
 def multiply_population(population, length=length):
     # primitiva recoimbination
@@ -60,7 +39,16 @@ logging.basicConfig(filename="evolution.log",
 # Генерирование (прочитывание из файла) базовой популяции
 
 #outfile.write("Generating base population" + "\n")
-population_list = [generate_DNA(length) for _ in range(population_size)]
+population = Population()
+population.initiate()
+
+for _ in range(generations):
+    population.mutate()
+    population.select()
+
+
+print(population)
+"""
 population_selected = population_list
 
 print("Generated empty grid")
@@ -106,7 +94,7 @@ for _ in range(generations):
     time.sleep(2)
 
 print("Your population survived the toll of %d generations!" % generations)
-
+"""
 # Закрываем файл
 #outfile.close()
 #logging.info("Outfile has been closed. File path is " + outfile_path)
